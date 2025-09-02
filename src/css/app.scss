@@ -1,1 +1,418 @@
 // app global css in SCSS form
+
+// Modern Card Styles
+.q-card {
+  border-radius: 16px !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    transform: translateY(-2px);
+  }
+}
+
+// Modern Button Styles
+.q-btn {
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  
+  &:before {
+    box-shadow: none !important;
+  }
+  
+  &:after {
+    box-shadow: none !important;
+  }
+  
+  &:hover:before {
+    box-shadow: none !important;
+  }
+  
+  &.q-btn--actionable:before {
+    box-shadow: none !important;
+  }
+}
+
+// Modern Input Styles
+.q-field {
+  .q-field__control {
+    border-radius: 12px !important;
+
+    // &:before {
+    //   border-color: rgba(0, 0, 0, 0.1) !important;
+    // }
+  }
+
+  &.q-field--filled .q-field__control {
+    background: rgba(0, 0, 0, 0.03) !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05) !important;
+    }
+  }
+
+  &.q-field--focused .q-field__control {
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1) !important;
+  }
+}
+
+// Modern Shadows
+.shadow-1 {
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-2 {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.shadow-3 {
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.shadow-4 {
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+
+// Modern Layout Spacing
+.q-page {
+  padding: 24px !important;
+}
+
+// Modern Typography
+.text-h6 {
+  font-weight: 700 !important;
+  font-size: 1.125rem !important;
+  line-height: 1.75rem !important;
+}
+
+// Modern Form Spacing
+.q-form .q-gutter-md > * {
+  margin-bottom: 20px !important;
+}
+
+// Smooth Transitions
+* {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+// Navbar Custom Styles
+.main-toolbar {
+  .logo-container {
+    display: flex;
+    align-items: center;
+
+    .logo-image {
+      height: 32px;
+      width: auto;
+      max-width: 120px;
+      object-fit: contain;
+    }
+  }
+
+  .delivery-btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+
+    .delivery-text {
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .departments-btn {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .search-input {
+    .q-field__control {
+      border-radius: 24px !important;
+      height: 40px;
+    }
+
+    .search-btn {
+      border-radius: 0 20px 20px 0;
+      height: 32px;
+      width: 40px;
+    }
+  }
+
+  .right-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .action-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 8px 12px;
+    min-height: 48px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-content {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+
+    .btn-label {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .btn-sublabel {
+      font-size: 11px;
+      opacity: 0.9;
+      white-space: nowrap;
+    }
+  }
+
+  .cart-btn {
+    position: relative;
+
+    .cart-price {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+}
+
+.secondary-toolbar {
+  .secondary-btn-text {
+    font-size: 13px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Mobile Top Bar Styles
+.mobile-top-bar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-search-bar {
+  .mobile-search-container {
+    width: 100%;
+
+    .mobile-search-input {
+      .q-field__control {
+        border-radius: 24px !important;
+        height: 40px;
+      }
+
+      .search-btn {
+        border-radius: 0 20px 20px 0;
+        height: 32px;
+        width: 40px;
+      }
+    }
+  }
+}
+
+// Mobile Responsive
+@media (max-width: 1024px) {
+  .main-toolbar {
+    .search-container {
+      max-width: 400px !important;
+    }
+
+    .action-btn {
+      .btn-content {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .main-toolbar {
+    .departments-btn {
+      display: none;
+    }
+
+    .search-container {
+      max-width: 300px !important;
+    }
+  }
+}
+
+// Auth Layout Styles
+.auth-logo-btn {
+  padding: 8px 16px;
+
+  .auth-logo-image {
+    height: 40px;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+// Login Page Styles
+.login-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  position: relative;
+  padding: 0 !important;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  gap: 80px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 400px;
+  width: 100%;
+
+  .login-form {
+    .forgot-password {
+      .forgot-link {
+        font-size: 13px;
+        color: #666;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .signup-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+
+    .signup-text {
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Signup Page Styles (reusing login styles)
+.signup-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  position: relative;
+  padding: 0 !important;
+}
+
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  gap: 80px;
+}
+
+.signup-card {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 400px;
+  width: 100%;
+
+  .signup-form {
+    .forgot-password {
+      text-align: left;
+
+      .q-checkbox {
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
+
+  .signup-link {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+
+    .signup-text {
+      color: #22c55e;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .login-container,
+  .signup-container {
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+  }
+
+  .illustration {
+    display: none;
+  }
+
+  .login-card,
+  .signup-card {
+    padding: 32px 24px;
+  }
+}
