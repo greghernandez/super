@@ -14,10 +14,10 @@ const routes: RouteRecordRaw[] = [
         path: 'producto/:id',
         component: () => import('pages/ProductPage.vue'),
       },
-      // {
-      //   path: 'pedidos',
-      //   component: () => import('pages/OrdersPage.vue')
-      // }
+      {
+        path: 'pedidos',
+        component: () => import('pages/OrdersPage.vue'),
+      },
     ],
   },
 
