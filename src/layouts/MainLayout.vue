@@ -56,20 +56,17 @@
             <span>Departamentos</span>
           </template>
           <q-list style="min-width: 200px">
-            <q-item clickable v-close-popup>
-              <q-item-section>Electrónicos</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>Ropa y Accesorios</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>Hogar y Jardín</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>Deportes</q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section>Belleza</q-item-section>
+            <q-item
+              v-for="department in departments.filter((d) => d.isActive)"
+              :key="department.id"
+              clickable
+              v-close-popup
+              @click="navigateToDepartment(department)"
+            >
+              <q-item-section avatar>
+                <span style="font-size: 16px">{{ department.icon }}</span>
+              </q-item-section>
+              <q-item-section>{{ department.name }}</q-item-section>
             </q-item>
           </q-list>
         </q-btn-dropdown>
@@ -107,7 +104,7 @@
         <!-- Right Side Actions -->
         <div class="right-actions" v-show="$q.screen.md || $q.screen.lg || $q.screen.xl">
           <!-- Reorder -->
-          <q-btn flat no-caps class="action-btn text-white q-mr-sm">
+          <q-btn flat no-caps class="action-btn text-white q-mr-sm" @click="$router.push('/pedidos')">
             <q-icon name="refresh" size="20px" class="q-mr-xs" />
             <div class="btn-content">
               <div class="btn-label">Vuelve a pedir</div>
@@ -184,7 +181,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { departments } from '../../data';
 
+const router = useRouter();
 const searchQuery = ref('');
 const cartCount = ref(0);
 
@@ -193,5 +193,9 @@ const performSearch = () => {
     console.log('Searching for:', searchQuery.value);
     // TODO: Implement search functionality
   }
+};
+
+const navigateToDepartment = (department: (typeof departments)[0]) => {
+  void router.push(`/departamento/${department.slug}`);
 };
 </script>
