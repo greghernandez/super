@@ -1,7 +1,7 @@
 <template>
   <q-card class="product-card" flat bordered @click="navigateToProduct">
     <div class="product-image-container">
-      <img :src="product.image" :alt="product.name" class="product-image" />
+      <q-img :src="product.images[0]" :alt="product.name" class="product-image" />
       <div v-if="product.isOnSale" class="sale-badge">-{{ product.discount }}%</div>
     </div>
 
@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import type { Product } from '../../../data';
+import type { Product } from '../../types/product';
 
 interface Props {
   product: Product;
@@ -70,7 +70,7 @@ const addToCart = () => {
 };
 
 const navigateToProduct = () => {
-  void router.push(`/producto/${props.product.id}`);
+  void router.push(`/producto/${props.product.slug}`);
 };
 </script>
 

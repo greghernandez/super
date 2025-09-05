@@ -19,7 +19,7 @@
         <!-- Product Image -->
         <div class="col-12 col-md-6">
           <div class="product-image-container">
-            <img :src="product.image" :alt="product.name" class="product-image" />
+            <q-img :src="product.images[0]" :alt="product.name" class="product-image" />
             <div v-if="product.isOnSale" class="sale-badge">-{{ product.discount }}%</div>
           </div>
         </div>
@@ -112,7 +112,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { departments, products, type Product } from '../../data';
+import { departments, products } from '../../data';
+import type { Product } from '../types/product';
 
 const route = useRoute();
 const product = ref<Product | null>(null);
@@ -131,15 +132,15 @@ const addToCart = () => {
   }
 };
 
-// Buscar producto por ID
-const findProductById = (id: number) => {
-  return products.find((prod) => prod.id === id) || null;
+// Buscar producto por slug
+const findProductBySlug = (slug: string) => {
+  return products.find((prod) => prod.slug === slug) || null;
 };
 
 // Función para actualizar producto
 const updateProduct = () => {
-  const id = parseInt(route.params.id as string);
-  product.value = findProductById(id);
+  const slug = route.params.slug as string;
+  product.value = findProductBySlug(slug);
 };
 
 // Inicializar producto
@@ -149,7 +150,7 @@ onMounted(() => {
 
 // Escuchar cambios en la ruta
 watch(
-  () => route.params.id,
+  () => route.params.slug,
   () => {
     updateProduct();
   },

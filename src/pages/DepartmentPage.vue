@@ -43,7 +43,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { departments, products, type Department, type Product } from '../../data';
+import { departments, products } from '../../data';
+import type { Department, Product } from '../types/product';
 import ProductCard from '../components/products/ProductCard.vue';
 import EmptyState from '../components/EmptyState.vue';
 
