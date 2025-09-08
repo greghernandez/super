@@ -14,13 +14,40 @@
         <q-form @submit="onSubmit" class="signup-form">
           <div class="input-group">
             <q-input
-              v-model="name"
-              placeholder="Nombre completo"
+              v-model="firstName"
+              placeholder="Nombre"
               type="text"
               outlined
               dense
               class="modern-input"
               :rules="[(val) => (val && val.length > 0) || 'Ingresa tu nombre']"
+            />
+          </div>
+
+          <div class="input-group">
+            <q-input
+              v-model="lastName"
+              placeholder="Apellidos"
+              type="text"
+              outlined
+              dense
+              class="modern-input"
+              :rules="[(val) => (val && val.length > 0) || 'Ingresa tus apellidos']"
+            />
+          </div>
+
+          <div class="input-group">
+            <q-input
+              v-model="phone"
+              placeholder="Número telefónico"
+              type="number"
+              outlined
+              dense
+              class="modern-input"
+              :rules="[
+                (val) => (val && val.length > 0) || 'Ingresa tu número telefónico',
+                (val) => /^\d{10}$/.test(val) || 'El número debe tener exactamente 10 dígitos',
+              ]"
             />
           </div>
 
@@ -118,8 +145,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const name = ref('');
+const router = useRouter();
+
+const firstName = ref('');
+const lastName = ref('');
+const phone = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
@@ -128,7 +160,14 @@ const showConfirmPassword = ref(false);
 const acceptTerms = ref(false);
 
 const onSubmit = () => {
-  console.log('Signup attempt with:', { name: name.value, email: email.value });
+  console.log('Signup attempt with:', {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    phone: phone.value,
+    email: email.value,
+  });
   // TODO: Implement signup logic
+  // Redirect to validation page
+  void router.push('/validation');
 };
 </script>
