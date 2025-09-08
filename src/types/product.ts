@@ -50,3 +50,32 @@ export interface Product {
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }
+
+// Cart item model
+export interface CartItem {
+  id: string;
+  product: Product;
+  quantity: number;
+  selectedWeight?: number;
+  notes?: string;
+}
+
+// Payment methods
+export interface PaymentMethod {
+  id: string;
+  name: string;
+  type: 'card' | 'cash' | 'transfer';
+  icon: string;
+  isActive: boolean;
+}
+
+// Shipping methods
+export interface ShippingMethod {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  estimatedDays: string;
+  icon: string;
+  isActive: boolean;
+}

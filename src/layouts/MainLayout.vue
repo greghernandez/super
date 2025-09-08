@@ -16,7 +16,7 @@
         </q-btn>
 
         <!-- Mobile Cart -->
-        <q-btn flat no-caps class="text-white cart-btn">
+        <q-btn flat no-caps class="text-white cart-btn" @click="$router.push('/carrito')">
           <q-badge color="accent" floating rounded>{{ cartCount }}</q-badge>
           <q-icon name="shopping_cart" size="24px" />
         </q-btn>
@@ -122,7 +122,7 @@
           </q-btn>
 
           <!-- Cart -->
-          <q-btn flat no-caps class="action-btn text-white cart-btn">
+          <q-btn flat no-caps class="action-btn text-white cart-btn" @click="$router.push('/carrito')">
             <q-badge color="accent" floating rounded>{{ cartCount }}</q-badge>
             <q-icon name="shopping_cart" size="24px" class="q-mr-xs" />
           </q-btn>
@@ -183,10 +183,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { departments } from '../../data';
+import { useCart } from '../composables/useCart';
 
 const router = useRouter();
 const searchQuery = ref('');
-const cartCount = ref(0);
+const { cartCount } = useCart();
 
 const performSearch = () => {
   if (searchQuery.value.trim()) {

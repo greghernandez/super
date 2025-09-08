@@ -41,6 +41,7 @@
         color="green"
         unelevated
         class="full-width"
+        no-caps
         @click.stop="addToCart"
       >
         <q-icon name="add_shopping_cart" class="q-mr-sm" />
@@ -52,6 +53,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { useCart } from '../../composables/useCart';
 import type { Product } from '../../types/product';
 
 interface Props {
@@ -60,12 +62,14 @@ interface Props {
 
 const props = defineProps<Props>();
 const router = useRouter();
+const { addToCart: addProductToCart } = useCart();
 
 const emit = defineEmits<{
   addToCart: [product: Product];
 }>();
 
 const addToCart = () => {
+  addProductToCart(props.product);
   emit('addToCart', props.product);
 };
 

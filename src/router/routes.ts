@@ -18,6 +18,10 @@ const routes: RouteRecordRaw[] = [
         path: 'pedidos',
         component: () => import('pages/OrdersPage.vue'),
       },
+      {
+        path: 'carrito',
+        component: () => import('pages/CartPage.vue'),
+      },
     ],
   },
 
