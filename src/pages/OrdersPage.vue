@@ -105,6 +105,7 @@
                   <q-btn
                     color="primary"
                     label="Programar Pedido"
+                    no-caps
                     icon="add"
                     @click="showCreateRecurringDialog = true"
                   />
@@ -114,99 +115,13 @@
 
             <!-- Recurring Orders List -->
             <div class="recurring-orders-list">
-              <q-card
+              <RecurringOrderCard
                 v-for="recurringOrder in recurringOrders"
                 :key="recurringOrder.id"
-                class="recurring-order-card q-mb-md"
-                flat
-                bordered
-              >
-                <q-card-section>
-                  <div class="row items-start q-gutter-md">
-                    <!-- Order Info -->
-                    <div class="col-12 col-md-6">
-                      <div class="text-h6 text-weight-medium q-mb-sm">
-                        {{ recurringOrder.name }}
-                      </div>
-                      <div class="text-body2 text-grey-6 q-mb-sm">
-                        {{ recurringOrder.items.length }} productos • ${{
-                          recurringOrder.total.toFixed(2)
-                        }}
-                      </div>
-                      <div class="text-body2">
-                        <strong>Programación:</strong>
-                        {{ getScheduleText(recurringOrder.schedule) }}
-                      </div>
-                    </div>
-
-                    <!-- Next Delivery -->
-                    <div class="col-12 col-md-3">
-                      <div class="text-body2 text-weight-medium q-mb-sm">Próxima entrega</div>
-                      <div class="text-body1 text-primary">
-                        {{ formatDate(recurringOrder.nextDelivery) }}
-                      </div>
-                    </div>
-
-                    <!-- Status -->
-                    <div class="col-12 col-md-3">
-                      <q-toggle
-                        v-model="recurringOrder.isActive"
-                        :label="recurringOrder.isActive ? 'Activo' : 'Pausado'"
-                        color="primary"
-                        @update:model-value="toggleRecurringOrder(recurringOrder.id)"
-                      />
-                    </div>
-                  </div>
-
-                  <!-- Product Preview -->
-                  <div class="products-preview q-mt-md">
-                    <div class="row q-gutter-sm">
-                      <div
-                        v-for="item in recurringOrder.items.slice(0, 4)"
-                        :key="item.id"
-                        class="product-thumb"
-                      >
-                        <q-img
-                          :src="item.image"
-                          :alt="item.name"
-                          class="rounded-borders"
-                          style="width: 50px; height: 50px"
-                        />
-                      </div>
-                      <div
-                        v-if="recurringOrder.items.length > 4"
-                        class="more-items flex items-center justify-center"
-                      >
-                        <div class="text-caption text-grey-6">
-                          +{{ recurringOrder.items.length - 4 }} más
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Actions -->
-                  <q-card-actions align="right" class="q-mt-md">
-                    <q-btn
-                      flat
-                      color="primary"
-                      label="Editar"
-                      @click="editRecurringOrder(recurringOrder.id)"
-                    />
-                    <q-btn
-                      flat
-                      color="primary"
-                      label="Pedir ahora"
-                      @click="orderNow(recurringOrder.id)"
-                    />
-                    <q-btn
-                      flat
-                      color="negative"
-                      label="Eliminar"
-                      @click="deleteRecurringOrder(recurringOrder.id)"
-                    />
-                  </q-card-actions>
-                </q-card-section>
-              </q-card>
+                :recurring-order="recurringOrder"
+                @toggle="toggleRecurringOrder"
+                @view-details="viewRecurringOrderDetails"
+              />
 
               <!-- Empty State -->
               <div v-if="recurringOrders.length === 0" class="empty-state text-center q-pa-xl">
@@ -299,13 +214,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import OrderCard from 'src/components/orders/OrderCard.vue';
-import type {
-  Order,
-  RecurringOrder,
-  OrderStatus,
-  RecurringFrequency,
-  RecurringOrderSchedule,
-} from 'src/models/order';
+import RecurringOrderCard from 'src/components/orders/RecurringOrderCard.vue';
+import type { Order, RecurringOrder, OrderStatus, RecurringFrequency } from 'src/models/order';
 import { ORDER_STATUS_LABELS, FREQUENCY_LABELS, DAY_OF_WEEK_LABELS } from 'src/models/order';
 
 // Reactive data
@@ -455,30 +365,6 @@ const isValidRecurringOrder = computed(() => {
   );
 });
 
-// Methods
-const formatDate = (date: Date) => {
-  return new Intl.DateTimeFormat('es-ES', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
-};
-
-const getScheduleText = (schedule: RecurringOrderSchedule) => {
-  switch (schedule.frequency) {
-    case 'weekly':
-      return `Cada ${DAY_OF_WEEK_LABELS[schedule.dayOfWeek!]}`;
-    case 'biweekly':
-      return `Cada 2 semanas los ${DAY_OF_WEEK_LABELS[schedule.dayOfWeek!]}`;
-    case 'monthly':
-      return `Cada mes el día ${schedule.dayOfMonth}`;
-    case 'bimonthly':
-      return `Cada 2 meses`;
-    default:
-      return 'Programación personalizada';
-  }
-};
-
 // Actions
 const viewOrderDetails = (orderId: string) => {
   console.log('Viewing order details:', orderId);
@@ -503,19 +389,9 @@ const toggleRecurringOrder = (orderId: string) => {
   }
 };
 
-const editRecurringOrder = (orderId: string) => {
-  console.log('Editing recurring order:', orderId);
-  // TODO: Open edit dialog
-};
-
-const orderNow = (orderId: string) => {
-  console.log('Ordering now:', orderId);
-  // TODO: Create immediate order from recurring order
-};
-
-const deleteRecurringOrder = (orderId: string) => {
-  console.log('Deleting recurring order:', orderId);
-  // TODO: Show confirmation dialog and delete
+const viewRecurringOrderDetails = (orderId: string) => {
+  console.log('Viewing recurring order details:', orderId);
+  // TODO: Navigate to recurring order details page
 };
 
 const cancelCreateRecurring = () => {
@@ -548,14 +424,6 @@ onMounted(() => {
 
 .page-container {
   width: 100%;
-}
-
-.recurring-order-card {
-  transition: all 0.2s ease;
-}
-
-.recurring-order-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .delivery-status {
