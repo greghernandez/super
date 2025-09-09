@@ -7,9 +7,16 @@
           Comprar ahora
         </q-btn>
       </div>
-      <div class="image-section">
-        <div class="headphone-illustration">🍇</div>
-      </div>
+      <!-- <div class="image-section">
+        <div class="grocery-illustration">
+          <img
+            src="https://plus.unsplash.com/premium_vector-1726838396269-bdc82c8d8625?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Bolsa de compras con productos frescos"
+            width="120"
+            height="120"
+          />
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -69,8 +76,7 @@
     align-items: center;
     justify-content: center;
 
-    .headphone-illustration {
-      font-size: 120px;
+    .grocery-illustration {
       background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       width: 180px;
@@ -130,10 +136,14 @@
     .image-section {
       flex: none;
 
-      .headphone-illustration {
-        font-size: 80px;
+      .grocery-illustration {
         width: 120px;
         height: 120px;
+
+        svg {
+          width: 80px;
+          height: 80px;
+        }
       }
     }
   }

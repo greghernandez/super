@@ -14,7 +14,7 @@
           @click="selectCategory(department)"
         >
           <div class="category-circle">
-            <div class="category-icon">{{ department.icon }}</div>
+            <q-img :src="department.image" :alt="department.name" class="category-image" />
           </div>
           <div class="category-name">{{ department.name }}</div>
         </div>
@@ -83,9 +83,11 @@ const selectCategory = (department: (typeof departments)[0]) => {
       margin: 0 auto 8px auto;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-      .category-icon {
-        font-size: 28px;
-        line-height: 1;
+      .category-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
       }
     }
 
@@ -118,8 +120,11 @@ const selectCategory = (department: (typeof departments)[0]) => {
         height: 56px;
         margin-bottom: 6px;
 
-        .category-icon {
-          font-size: 24px;
+        .category-image {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
         }
       }
 
