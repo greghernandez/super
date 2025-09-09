@@ -64,7 +64,11 @@
               @click="navigateToDepartment(department)"
             >
               <q-item-section avatar>
-                <span style="font-size: 16px">{{ department.icon }}</span>
+                <q-img 
+                  :src="department.image" 
+                  :alt="department.name"
+                  style="width: 32px; height: 32px; border-radius: 50%"
+                />
               </q-item-section>
               <q-item-section>{{ department.name }}</q-item-section>
             </q-item>
