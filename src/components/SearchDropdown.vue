@@ -95,7 +95,7 @@ const filteredProducts = computed(() => {
       (product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query) ||
         product.brand.toLowerCase().includes(query) ||
-        product.category.name.toLowerCase().includes(query)),
+        product.category?.name.toLowerCase().includes(query)),
   );
 });
 

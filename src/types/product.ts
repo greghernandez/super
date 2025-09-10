@@ -1,21 +1,27 @@
-// Modelo de departamento para supermercado en l�nea
+// Modelo de departamento para supermercado en línea
 export interface Department {
-  id: number;
+  id: string; // UUID
   name: string;
   description: string;
   icon: string;
   image: string;
   slug: string;
   isActive: boolean;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
 }
 
 // Modelo de categoría
 export interface Category {
-  id: number;
+  id: string; // UUID
   name: string;
   slug: string;
   description?: string;
+  parentId?: string; // UUID reference to parent category
+  level: number; // Category hierarchy level
   isActive: boolean;
+  createdAt: string; // ISO date string
+  updatedAt: string; // ISO date string
 }
 
 // Modelo de dimensiones del producto
@@ -27,7 +33,7 @@ export interface ProductDimensions {
 
 // Modelo de producto
 export interface Product {
-  id: number;
+  id: string; // UUID
   sku: string; // Stock Keeping Unit - identificación única
   slug: string; // URL amigable (ej: "arroz-integral-1kg")
   name: string;
@@ -35,18 +41,22 @@ export interface Product {
   price: number;
   originalPrice?: number;
   images: string[]; // Múltiples imágenes - la primera es la principal
-  category: Category;
-  departmentId: number;
+  category?: Category; // Optional category object
+  categoryId: string; // UUID reference
+  departmentId: string; // UUID reference
   brand: string;
   unit: string;
   stock: number;
+  minStock: number; // Minimum stock level
   weight: number; // gramos
+  weightUnit: string; // Unit of weight
   dimensions: ProductDimensions;
   isOnSale: boolean;
   discount?: number;
   rating: number;
   reviews: number;
   isActive: boolean; // Estado del producto
+  tags: string[]; // Product tags
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 }

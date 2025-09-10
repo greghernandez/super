@@ -45,7 +45,7 @@ const saveCartToStorage = (items: CartItem[]) => {
     const cartData: CartData = {
       version: CART_VERSION,
       timestamp: Date.now(),
-      items
+      items,
     };
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartData));
   } catch (error) {
@@ -57,36 +57,36 @@ const loadCartFromStorage = (): CartItem[] => {
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
     if (!stored) return [];
-    
+
     const parsedData = JSON.parse(stored);
-    
+
     // Validate data structure using type guard
     if (!isValidCartData(parsedData)) {
       console.warn('Invalid cart data structure, clearing cart');
       clearCartStorage();
       return [];
     }
-    
+
     const cartData: CartData = parsedData;
-    
+
     // Version check (for future compatibility)
     if (cartData.version !== CART_VERSION) {
       console.log('Cart version mismatch, clearing cart');
       clearCartStorage();
       return [];
     }
-    
+
     // Optional: Clear old carts (older than 30 days)
     const thirtyDaysInMs = 30 * 24 * 60 * 60 * 1000;
-    if (cartData.timestamp && (Date.now() - cartData.timestamp) > thirtyDaysInMs) {
+    if (cartData.timestamp && Date.now() - cartData.timestamp > thirtyDaysInMs) {
       console.log('Cart expired, clearing');
       clearCartStorage();
       return [];
     }
-    
+
     // Validate each cart item structure using type guard
     const validItems = cartData.items.filter(isValidCartItem);
-    
+
     return validItems;
   } catch (error) {
     console.warn('Failed to load cart from localStorage:', error);
@@ -113,8 +113,8 @@ export const useCart = () => {
   });
 
   const addToCart = (product: Product, quantity: number = 1) => {
-    const existingItem = cartItems.value.find(item => item.product.id === product.id);
-    
+    const existingItem = cartItems.value.find((item) => item.product.id === product.id);
+
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
@@ -128,14 +128,14 @@ export const useCart = () => {
   };
 
   const removeFromCart = (itemId: string) => {
-    const index = cartItems.value.findIndex(item => item.id === itemId);
+    const index = cartItems.value.findIndex((item) => item.id === itemId);
     if (index > -1) {
       cartItems.value.splice(index, 1);
     }
   };
 
   const updateQuantity = (itemId: string, quantity: number) => {
-    const item = cartItems.value.find(item => item.id === itemId);
+    const item = cartItems.value.find((item) => item.id === itemId);
     if (item) {
       if (quantity <= 0) {
         removeFromCart(itemId);
@@ -150,17 +150,17 @@ export const useCart = () => {
     clearCartStorage();
   };
 
-  const getProductQuantity = (productId: number): number => {
-    const item = cartItems.value.find(item => item.product.id === productId);
+  const getProductQuantity = (productId: string): number => {
+    const item = cartItems.value.find((item) => item.product.id === productId);
     return item ? item.quantity : 0;
   };
 
-  const cartCount = computed(() => 
-    cartItems.value.reduce((total, item) => total + item.quantity, 0)
+  const cartCount = computed(() =>
+    cartItems.value.reduce((total, item) => total + item.quantity, 0),
   );
 
   const cartTotal = computed(() =>
-    cartItems.value.reduce((total, item) => total + (item.product.price * item.quantity), 0)
+    cartItems.value.reduce((total, item) => total + item.product.price * item.quantity, 0),
   );
 
   return {
