@@ -51,14 +51,19 @@
           <div
             v-for="item in recurringOrder.items.slice(0, 3)"
             :key="item.id"
-            class="product-thumb"
+            class="product-thumb clickable"
+            @click="navigateToProduct(item)"
           >
             <q-img
-              :src="item.image"
-              :alt="item.name"
+              :src="getProductImage(item)"
+              :alt="getProductName(item)"
               class="rounded-borders"
               style="width: 60px; height: 60px"
-            />
+            >
+              <q-tooltip class="text-body2">
+                {{ getProductName(item) }} - Click para ver detalles
+              </q-tooltip>
+            </q-img>
           </div>
           <div
             v-if="recurringOrder.items.length > 3"
@@ -77,8 +82,11 @@ import { ref, watch } from 'vue';
 import {
   type RecurringOrder,
   type RecurringOrderSchedule,
+  type OrderItem,
   DAY_OF_WEEK_LABELS,
 } from 'src/models/order';
+import { products } from '../../../data';
+import { useRouter } from 'vue-router';
 
 interface Props {
   recurringOrder: RecurringOrder;
@@ -92,6 +100,7 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
+const router = useRouter();
 const isActive = ref(props.recurringOrder.isActive);
 
 watch(
@@ -127,6 +136,42 @@ const getScheduleText = (schedule: RecurringOrderSchedule) => {
 const handleToggle = () => {
   emit('toggle', props.recurringOrder.id);
 };
+
+// Helper functions to get product data
+const getProductById = (productId: string) => {
+  return products.find((product) => product.id === productId);
+};
+
+const getProductImage = (item: OrderItem): string => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product && product.images.length > 0) {
+      return product.images[0] ?? '';
+    }
+  }
+  // Fallback to item image
+  return item.image;
+};
+
+const getProductName = (item: OrderItem): string => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product) {
+      return product.name;
+    }
+  }
+  // Fallback to item name
+  return item.name;
+};
+
+const navigateToProduct = (item: OrderItem) => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product) {
+      void router.push(`/producto/${product.slug}`);
+    }
+  }
+};
 </script>
 
 <style scoped>
@@ -154,6 +199,18 @@ const handleToggle = () => {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
+}
+
+.product-thumb.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-thumb.clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .more-items {

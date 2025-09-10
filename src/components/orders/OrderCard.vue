@@ -48,13 +48,22 @@
       <!-- Product Preview -->
       <div class="products-preview q-mt-md">
         <div class="row q-gutter-sm">
-          <div v-for="item in order.items.slice(0, 3)" :key="item.id" class="product-thumb">
+          <div
+            v-for="item in order.items.slice(0, 3)"
+            :key="item.id"
+            class="product-thumb clickable"
+            @click="navigateToProduct(item)"
+          >
             <q-img
-              :src="item.image"
-              :alt="item.name"
+              :src="getProductImage(item)"
+              :alt="getProductName(item)"
               class="rounded-borders"
               style="width: 60px; height: 60px"
-            />
+            >
+              <q-tooltip class="text-body2">
+                {{ getProductName(item) }} - Click para ver detalles
+              </q-tooltip>
+            </q-img>
           </div>
           <div v-if="order.items.length > 3" class="more-items flex items-center justify-center">
             <div class="text-caption text-grey-6">+{{ order.items.length - 3 }} más</div>
@@ -66,8 +75,10 @@
 </template>
 
 <script setup lang="ts">
-import type { Order, OrderStatus } from 'src/models/order';
+import type { Order, OrderStatus, OrderItem } from 'src/models/order';
 import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from 'src/models/order';
+import { products } from '../../../data';
+import { useRouter } from 'vue-router';
 
 interface Props {
   order: Order;
@@ -80,6 +91,8 @@ defineEmits<{
   reorder: [orderId: string];
   'cancel-order': [orderId: string];
 }>();
+
+const router = useRouter();
 
 const getStatusColor = (status: OrderStatus) => {
   return ORDER_STATUS_COLORS[status] || 'grey';
@@ -99,6 +112,42 @@ const formatDate = (date: Date) => {
     month: 'long',
     day: 'numeric',
   }).format(date);
+};
+
+// Helper functions to get product data
+const getProductById = (productId: string) => {
+  return products.find((product) => product.id === productId);
+};
+
+const getProductImage = (item: OrderItem): string => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product && product.images.length > 0) {
+      return product.images[0] ?? '';
+    }
+  }
+  // Fallback to item image
+  return item.image;
+};
+
+const getProductName = (item: OrderItem): string => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product) {
+      return product.name;
+    }
+  }
+  // Fallback to item name
+  return item.name;
+};
+
+const navigateToProduct = (item: OrderItem) => {
+  if (item.productId) {
+    const product = getProductById(item.productId);
+    if (product) {
+      void router.push(`/producto/${product.slug}`);
+    }
+  }
 };
 </script>
 
@@ -120,6 +169,18 @@ const formatDate = (date: Date) => {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
   overflow: hidden;
+}
+
+.product-thumb.clickable {
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-thumb.clickable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .more-items {

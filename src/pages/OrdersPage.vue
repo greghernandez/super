@@ -233,10 +233,38 @@ const orders = ref<Order[]>([
     status: 'delivered',
     total: 89.5,
     items: [
-      { id: 1, name: 'Leche', image: 'https://placehold.co/600x400' },
-      { id: 2, name: 'Pan', image: 'https://placehold.co/600x400' },
-      { id: 3, name: 'Huevos', image: 'https://placehold.co/600x400' },
-      { id: 4, name: 'Queso', image: 'https://placehold.co/600x400' },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440107', 
+        name: 'Leche Entera Lala', 
+        image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440107',
+        quantity: 2,
+        price: 23.5
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440111', 
+        name: 'Pan Dulce Variado', 
+        image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440111',
+        quantity: 1,
+        price: 35.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440108', 
+        name: 'Huevos San Juan', 
+        image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440108',
+        quantity: 1,
+        price: 54.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440109', 
+        name: 'Queso Oaxaca', 
+        image: 'https://images.unsplash.com/photo-1552767059-ce182ead6c1b?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440109',
+        quantity: 1,
+        price: 89.9
+      },
     ],
   },
   {
@@ -245,9 +273,30 @@ const orders = ref<Order[]>([
     status: 'in_transit',
     total: 156.75,
     items: [
-      { id: 5, name: 'Arroz', image: 'https://placehold.co/600x400' },
-      { id: 6, name: 'Frijoles', image: 'https://placehold.co/600x400' },
-      { id: 7, name: 'Aceite', image: 'https://placehold.co/600x400' },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440112', 
+        name: 'Arroz Verde Valle', 
+        image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440112',
+        quantity: 2,
+        price: 28.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440113', 
+        name: 'Frijoles Negros La Costeña', 
+        image: 'https://images.unsplash.com/photo-1599590142875-f0aca6fb3d1f?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440113',
+        quantity: 3,
+        price: 22.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440115', 
+        name: 'Coca-Cola', 
+        image: 'https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440115',
+        quantity: 2,
+        price: 35.5
+      },
     ],
   },
   {
@@ -256,8 +305,22 @@ const orders = ref<Order[]>([
     status: 'processing',
     total: 234.2,
     items: [
-      { id: 8, name: 'Carne', image: 'https://placehold.co/600x400' },
-      { id: 9, name: 'Pollo', image: 'https://placehold.co/600x400' },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440105', 
+        name: 'Carne Molida de Res', 
+        image: 'https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440105',
+        quantity: 1,
+        price: 139.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440106', 
+        name: 'Pollo Entero', 
+        image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440106',
+        quantity: 1,
+        price: 89.9
+      },
     ],
   },
 ]);
@@ -276,11 +339,46 @@ const recurringOrders = ref<RecurringOrder[]>([
     isActive: true,
     createdAt: new Date('2024-01-15'),
     items: [
-      { id: 1, name: 'Leche', image: 'https://placehold.co/600x400' },
-      { id: 2, name: 'Pan', image: 'https://placehold.co/600x400' },
-      { id: 3, name: 'Huevos', image: 'https://placehold.co/600x400' },
-      { id: 4, name: 'Arroz', image: 'https://placehold.co/600x400' },
-      { id: 5, name: 'Frijoles', image: 'https://placehold.co/600x400' },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440107', 
+        name: 'Leche Entera Lala', 
+        image: 'https://images.unsplash.com/photo-1563636619-e9143da7973b?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440107',
+        quantity: 3,
+        price: 23.5
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440110', 
+        name: 'Tortillas de Maíz', 
+        image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440110',
+        quantity: 2,
+        price: 18.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440108', 
+        name: 'Huevos San Juan', 
+        image: 'https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440108',
+        quantity: 2,
+        price: 54.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440112', 
+        name: 'Arroz Verde Valle', 
+        image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440112',
+        quantity: 4,
+        price: 28.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440113', 
+        name: 'Frijoles Negros La Costeña', 
+        image: 'https://images.unsplash.com/photo-1599590142875-f0aca6fb3d1f?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440113',
+        quantity: 5,
+        price: 22.9
+      },
     ],
   },
   {
@@ -295,9 +393,30 @@ const recurringOrders = ref<RecurringOrder[]>([
     isActive: false,
     createdAt: new Date('2024-02-01'),
     items: [
-      { id: 6, name: 'Detergente', image: 'https://placehold.co/600x400' },
-      { id: 7, name: 'Jabón', image: 'https://placehold.co/600x400' },
-      { id: 8, name: 'Papel higiénico', image: 'https://placehold.co/600x400' },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440118', 
+        name: 'Detergente Ariel', 
+        image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440118',
+        quantity: 1,
+        price: 89.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440121', 
+        name: 'Jabón Zote Rosa', 
+        image: 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440121',
+        quantity: 3,
+        price: 12.9
+      },
+      { 
+        id: '550e8400-e29b-41d4-a716-446655440119', 
+        name: 'Fabuloso Multiusos', 
+        image: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400&h=400&fit=crop',
+        productId: '550e8400-e29b-41d4-a716-446655440119',
+        quantity: 2,
+        price: 24.9
+      },
     ],
   },
 ]);

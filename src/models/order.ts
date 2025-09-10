@@ -3,11 +3,12 @@ export type OrderStatus = 'processing' | 'in_transit' | 'delivered' | 'cancelled
 export type RecurringFrequency = 'weekly' | 'biweekly' | 'monthly' | 'bimonthly';
 
 export interface OrderItem {
-  id: number;
+  id: string; // Changed to string to support UUIDs
   name: string;
   image: string;
   quantity?: number;
   price?: number;
+  productId?: string; // Optional reference to Product from data.ts
 }
 
 export interface Order {
