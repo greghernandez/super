@@ -64,8 +64,8 @@
               @click="navigateToDepartment(department)"
             >
               <q-item-section avatar>
-                <q-img 
-                  :src="department.image" 
+                <q-img
+                  :src="department.image"
                   :alt="department.name"
                   style="width: 32px; height: 32px; border-radius: 50%"
                 />
@@ -78,7 +78,7 @@
         <!-- Search Bar -->
         <div
           class="search-container q-mr-md"
-          style="flex: 1"
+          style="flex: 1; position: relative"
           v-show="$q.screen.md || $q.screen.lg || $q.screen.xl"
         >
           <q-input
@@ -88,6 +88,10 @@
             dense
             outlined
             bg-color="white"
+            @input="onSearchInput"
+            @focus="showSearchResults = true"
+            @blur="hideSearchResults"
+            @keyup.enter="performSearch"
           >
             <template v-slot:append>
               <q-btn
@@ -101,6 +105,16 @@
               />
             </template>
           </q-input>
+
+          <!-- Search Results Dropdown -->
+          <SearchDropdown
+            :search-query="searchQuery"
+            :products="products"
+            :show-results="showSearchResults && searchQuery.length > 2"
+            :max-results="5"
+            @product-selected="onProductSelected"
+            @view-all="onViewAllResults"
+          />
         </div>
 
         <q-space />
@@ -108,7 +122,12 @@
         <!-- Right Side Actions -->
         <div class="right-actions" v-show="$q.screen.md || $q.screen.lg || $q.screen.xl">
           <!-- Reorder -->
-          <q-btn flat no-caps class="action-btn text-white q-mr-sm" @click="$router.push('/pedidos')">
+          <q-btn
+            flat
+            no-caps
+            class="action-btn text-white q-mr-sm"
+            @click="$router.push('/pedidos')"
+          >
             <q-icon name="refresh" size="20px" class="q-mr-xs" />
             <div class="btn-content">
               <div class="btn-label">Vuelve a pedir</div>
@@ -126,7 +145,12 @@
           </q-btn>
 
           <!-- Cart -->
-          <q-btn flat no-caps class="action-btn text-white cart-btn" @click="$router.push('/carrito')">
+          <q-btn
+            flat
+            no-caps
+            class="action-btn text-white cart-btn"
+            @click="$router.push('/carrito')"
+          >
             <q-badge color="accent" floating rounded>{{ cartCount }}</q-badge>
             <q-icon name="shopping_cart" size="24px" class="q-mr-xs" />
           </q-btn>
@@ -152,7 +176,7 @@
         style="height: 56px; background: rgba(255, 255, 255, 0.1)"
         v-show="$q.screen.xs || $q.screen.sm"
       >
-        <div class="mobile-search-container" style="flex: 1">
+        <div class="mobile-search-container" style="flex: 1; position: relative">
           <q-input
             v-model="searchQuery"
             placeholder="Buscar productos..."
@@ -160,6 +184,10 @@
             dense
             outlined
             bg-color="white"
+            @input="onSearchInput"
+            @focus="showSearchResults = true"
+            @blur="hideSearchResults"
+            @keyup.enter="performSearch"
           >
             <template v-slot:append>
               <q-btn
@@ -173,6 +201,16 @@
               />
             </template>
           </q-input>
+
+          <!-- Mobile Search Results Dropdown -->
+          <SearchDropdown
+            :search-query="searchQuery"
+            :products="products"
+            :show-results="showSearchResults && searchQuery.length > 2"
+            :max-results="5"
+            @product-selected="onProductSelected"
+            @view-all="onViewAllResults"
+          />
         </div>
       </q-toolbar>
     </q-header>
@@ -186,18 +224,44 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { departments } from '../../data';
+import { departments, products } from '../../data';
 import { useCart } from '../composables/useCart';
+import SearchDropdown from '../components/SearchDropdown.vue';
 
 const router = useRouter();
 const searchQuery = ref('');
+const showSearchResults = ref(false);
 const { cartCount } = useCart();
+
+const onSearchInput = () => {
+  if (searchQuery.value.length > 2) {
+    showSearchResults.value = true;
+  } else {
+    showSearchResults.value = false;
+  }
+};
+
+const hideSearchResults = () => {
+  // Add delay to allow click events to process first
+  setTimeout(() => {
+    showSearchResults.value = false;
+  }, 150);
+};
 
 const performSearch = () => {
   if (searchQuery.value.trim()) {
-    console.log('Searching for:', searchQuery.value);
-    // TODO: Implement search functionality
+    showSearchResults.value = false;
+    void router.push(`/buscar?q=${encodeURIComponent(searchQuery.value)}`);
   }
+};
+
+const onProductSelected = () => {
+  showSearchResults.value = false;
+  searchQuery.value = '';
+};
+
+const onViewAllResults = () => {
+  showSearchResults.value = false;
 };
 
 const navigateToDepartment = (department: (typeof departments)[0]) => {
